@@ -1,6 +1,7 @@
 import sqlite3
 import os
 
+
 class User:
 
     def __init__(self, id, name, password, email, role_id):
@@ -34,6 +35,7 @@ def set_user(username, password, email):
     dbconn.commit()
     dbconn.close()
 
+
 def verify_email(email):
     dbconn = sqlite3.connect(DB_PATH)
     cursor = dbconn.cursor()
@@ -42,3 +44,10 @@ def verify_email(email):
     dbconn.close()
     return exists
 
+
+def delete_user(user_id):
+    dbconn = sqlite3.connect(DB_PATH)
+    cursor = dbconn.cursor()
+    cursor.execute('DELETE FROM user WHERE id = ?', (user_id,))
+    dbconn.commit()
+    dbconn.close()

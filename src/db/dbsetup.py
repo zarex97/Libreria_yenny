@@ -1,8 +1,10 @@
 import sqlite3
 
+
 def dbsetup():
     dbcon = sqlite3.connect('Library.db')
     cursor = dbcon.cursor()
+
 
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Role(
@@ -18,6 +20,7 @@ def dbsetup():
     password TEXT NOT NULL,
     email TEXT NOT NULL,
     role_id INTEGER,
+    premium BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (role_id) REFERENCES Role (id)
     )
     ''')

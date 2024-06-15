@@ -8,6 +8,5 @@ def register(username, password, email):
         set_user(username, hashed_password, email)
         print("El usuario se registro correctamente")
     else:
-        print("Este correo esta vinculado a una cuenta existente") #mostrar mensaje de que el email ya existe en la vase de datos
-
-
+        print("Este correo esta vinculado a una cuenta existente")
+        # mostrar mensaje de que el email ya existe en la base de datos
