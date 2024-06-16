@@ -1,8 +1,10 @@
 import sqlite3
 
+
 def dbsetup():
     dbcon = sqlite3.connect('Library.db')
     cursor = dbcon.cursor()
+
 
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Role(
@@ -18,6 +20,7 @@ def dbsetup():
     password TEXT NOT NULL,
     email TEXT NOT NULL,
     role_id INTEGER,
+    premium BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (role_id) REFERENCES Role (id)
     )
     ''')
@@ -44,7 +47,7 @@ def dbsetup():
     ''')
 
     cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Book_Order(
+    CREATE TABLE IF NOT EXISTS BookOrder(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
     date DATE NOT NULL,
@@ -58,10 +61,10 @@ def dbsetup():
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     order_id INTEGER,
     book_id INTEGER,
-    cuantity INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
     book_price DECIMAL NOT NULL,
     FOREIGN KEY (book_id) REFERENCES Book (id),
-    FOREIGN KEY (order_id) REFERENCES Book_Order (id)
+    FOREIGN KEY (order_id) REFERENCES BookOrder (id)
     )
     ''')
 
@@ -78,7 +81,7 @@ def dbsetup():
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     cart_id INTEGER,
     book_id INTEGER,
-    cuantity INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
     FOREIGN KEY (book_id) REFERENCES Book (id),
     FOREIGN KEY (cart_id) REFERENCES Cart (id)
     )
