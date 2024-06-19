@@ -6,7 +6,6 @@ def register(username, password, email):
     if not verify_email(email):
         hashed_password = hash_password(password)
         set_user(username, hashed_password, email)
-        print("El usuario se registro correctamente")
+        return True
     else:
-        print("Este correo esta vinculado a una cuenta existente")
-        # mostrar mensaje de que el email ya existe en la base de datos
+        return False

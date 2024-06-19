@@ -42,6 +42,20 @@ def set_order(user_id, books_data):
     dbconn.close()
 
 
+def get_order():
+    dbconn = sqlite3.connect(DB_PATH)
+    cursor = dbconn.cursor()
+    cursor.execute('''
+    SELECT o.id, u.name, o.date, o.value
+    FROM BookOrder o
+    INNER JOIN user u ON o.user_id = u.id
+    ORDER BY o.date DESC
+    ''')
+    orders = cursor.fetchall()
+    dbconn.close()
+    return orders
+
+
 
 #user_id = 1
 #

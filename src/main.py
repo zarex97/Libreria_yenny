@@ -1,6 +1,6 @@
 import tkinter as tk
 from ui.login import LoginFrame
-from ui.admin import AdminFrame
+from ui.adminpanel import AdminFrame
 from ui.registro import RegistroFrame
 from ui.pedidos import PedidosFrame
 from ui.productos import ProductosFrame
@@ -8,7 +8,7 @@ from ui.agregar import AgregarFrame
 
 
 def show_frame(frame):
-    frame.tkraise()  
+    frame.tkraise()
 
 
 root = tk.Tk()
@@ -32,6 +32,6 @@ registro_frame.grid(row=0, column=0, sticky='nsew', in_=root)
 pedidos_frame.grid(row=0, column=0, sticky='nsew', in_=root)
 productos_frame.grid(row=0, column=0, sticky='nsew', in_=root)
 
-show_frame(login_frame)
+show_frame(admin_frame)
 
 root.mainloop()

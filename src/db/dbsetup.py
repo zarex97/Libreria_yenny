@@ -5,7 +5,6 @@ def dbsetup():
     dbcon = sqlite3.connect('Library.db')
     cursor = dbcon.cursor()
 
-
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS Role(
     id INTEGER PRIMARY KEY AUTOINCREMENT,

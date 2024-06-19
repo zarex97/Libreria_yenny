@@ -2,17 +2,20 @@ from src.models.user import get_user
 from src.auth.auth import verify_password
 
 
-def login(username, password):
-    user_data = get_user(username)
+def login(email, password):
+    user = get_user(email)
 
-    if user_data:
-        user_id, name, hashed_password, email, role_id = user_data
-        if verify_password(password, hashed_password):
-            print(f"Se inicio sesion correctamente {name}")
+    if user:
+        print(f"Usuario encontrado: {user.email}, {user.password}")  # Diagnóstico
+        if verify_password(password, user.password):
+            print("Contraseña verificada correctamente")  # Diagnóstico
+            return user
         else:
-            print("Usuario o contraseña incorrecta")
+            print("Contraseña incorrecta")  # Diagnóstico
     else:
-        print(f"Usuario {username} no encontrado")
+        print("Usuario no encontrado")  # Diagnóstico
+    return None
+
 
 
 

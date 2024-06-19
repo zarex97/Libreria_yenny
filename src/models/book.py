@@ -51,3 +51,12 @@ def verify_book(title):
     exists = cursor.fetchone()[0] == 1
     dbconn.close()
     return exists
+
+
+def get_book_author_title():
+    dbconn = sqlite3.connect(DB_PATH)
+    cursor = dbconn.cursor()
+    cursor.execute('SELECT title, author FROM book')
+    books = [{'title': title, 'author': author} for title, author in cursor.fetchall()]
+    dbconn.close()
+    return books
