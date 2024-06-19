@@ -1,5 +1,6 @@
 import tkinter as tk
-from ui.styles import apply_styles
+from src.ui.styles import apply_styles
+
 
 class AdminFrame(tk.Frame):
     def __init__(self, parent, show_frame):
@@ -9,11 +10,10 @@ class AdminFrame(tk.Frame):
         apply_styles(self)  # Aplicar estilos aquí
 
     def create_widgets(self):
-        tk.Label(self, text="Administrador", font=("Helvetica", 24, "bold")).pack(pady=20)
-        
+        tk.Label(self, text="Panel de Administrador", font=("Helvetica", 24, "bold")).pack(pady=20)
         tk.Button(self, text="Agregar Producto", command=self.show_agregar_frame).pack(pady=10)
         tk.Button(self, text="Eliminar Producto").pack(pady=10)
-        tk.Button(self, text="Entrar Compra", command=self.show_productos_frame).pack(pady=10)
+        tk.Button(self, text="Ver Tienda", command=self.show_productos_frame).pack(pady=10)
         tk.Button(self, text="Ver Pedidos", command=self.show_pedidos_frame).pack(pady=10)
     
     def show_agregar_frame(self):

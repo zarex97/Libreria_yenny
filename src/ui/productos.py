@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from ui.styles import apply_styles
+from src.ui.styles import apply_styles
+from src.models.book import *
 
 class ProductosFrame(tk.Frame):
     def __init__(self, parent, show_frame):
@@ -28,8 +29,10 @@ class ProductosFrame(tk.Frame):
         canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
 
-        for i in range(12):
-            ttk.Label(scrollable_frame, text="Producto " + str(i)).grid(row=i//3, column=i%3, padx=10, pady=10)
+        books = get_book_author_title()
+
+        for i, book in enumerate(books):
+            ttk.Label(scrollable_frame, text=f"{book['title']} - {book['author']}").grid(row=i//2, column=i%2, padx=10, pady=10)
 
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
