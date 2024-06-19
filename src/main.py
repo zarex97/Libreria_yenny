@@ -4,34 +4,34 @@ from ui.adminpanel import AdminFrame
 from ui.registro import RegistroFrame
 from ui.pedidos import PedidosFrame
 from ui.productos import ProductosFrame
-from ui.agregar import AgregarFrame
+from ui.gestor import GestorFrame
 
+# Configurar la aplicación tkinter
+root = tk.Tk()
+root.title("Aplicación de Gestión")
+root.geometry("800x600")
 
+# Función para cambiar de frame
 def show_frame(frame):
     frame.tkraise()
 
+# Crear y configurar los diferentes frames
+login_frame = LoginFrame(root, lambda: show_frame(admin_frame))
+admin_frame = AdminFrame(root, lambda: show_frame(gestor_frame))
+registro_frame = RegistroFrame(root, lambda: show_frame(productos_frame))
+pedidos_frame = PedidosFrame(root, lambda: show_frame(admin_frame))
+productos_frame = ProductosFrame(root, lambda: show_frame(gestor_frame))  # Pasar lambda para cambiar de frame
+gestor_frame = GestorFrame(root)  # Solo parent como argumento
 
-root = tk.Tk()
-root.title("Aplicación")
-root.geometry("800x600")
+# Mostrar el frame inicial
+login_frame.grid(row=0, column=0, sticky='nsew')
 
-root.rowconfigure(0, weight=1)
-root.columnconfigure(0, weight=1)
+# Asociar función de cambio de frame a cada frame que lo necesite
+login_frame.show_frame = lambda: show_frame(admin_frame)
+admin_frame.show_frame = lambda: show_frame(gestor_frame)
+registro_frame.show_frame = lambda: show_frame(productos_frame)
+pedidos_frame.show_frame = lambda: show_frame(admin_frame)
+productos_frame.show_frame = lambda: show_frame(gestor_frame)
 
-login_frame = LoginFrame(root, show_frame)
-admin_frame = AdminFrame(root, show_frame)
-registro_frame = RegistroFrame(root, show_frame)
-pedidos_frame = PedidosFrame(root, show_frame)
-productos_frame = ProductosFrame(root, show_frame)
-agregar_frame = AgregarFrame(root, show_frame)
-
-
-login_frame.grid(row=0, column=0, sticky='nsew', in_=root)
-admin_frame.grid(row=0, column=0, sticky='nsew', in_=root)
-registro_frame.grid(row=0, column=0, sticky='nsew', in_=root)
-pedidos_frame.grid(row=0, column=0, sticky='nsew', in_=root)
-productos_frame.grid(row=0, column=0, sticky='nsew', in_=root)
-
-show_frame(admin_frame)
-
+# Iniciar la aplicación
 root.mainloop()
