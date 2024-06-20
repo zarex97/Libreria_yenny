@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1115eb76-61a2-48a0-83cb-0df36b34482d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/defaultimg.png" afterDir="false" />
+    <list default="true" id="1115eb76-61a2-48a0-83cb-0df36b34482d" name="Changes" comment="integracion Api para imagenes y modificacion del carrito">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/db/Library.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/Library.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logic/book_logic.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/logic/book_logic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/dbsetup.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/dbsetup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/book.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/book.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/bookOrder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/bookOrder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/adminpanel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/adminpanel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/agregar.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/agregar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/login.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/productos.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/productos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/registro.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/registro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/pedidos.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/pedidos.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +84,15 @@
       <updated>1718830431739</updated>
       <workItem from="1718830432999" duration="2719000" />
     </task>
+    <task id="LOCAL-00001" summary="integracion Api para imagenes y modificacion del carrito">
+      <option name="closed" value="true" />
+      <created>1718909259149</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1718909259149</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -92,14 +100,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="integracion Api para imagenes y modificacion del carrito" />
+    <option name="LAST_COMMIT_MESSAGE" value="integracion Api para imagenes y modificacion del carrito" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TP_Libreria$main.coverage" NAME="main Coverage Results" MODIFIED="1718908740602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/TP_Libreria$main.coverage" NAME="main Coverage Results" MODIFIED="1718912533231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/Libreria_yenny$gestor.coverage" NAME="gestor Coverage Results" MODIFIED="1718831897278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ui" />
-    <SUITE FILE_PATH="coverage/TP_Libreria$bookOrder.coverage" NAME="bookOrder Coverage Results" MODIFIED="1718905022526" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models" />
+    <SUITE FILE_PATH="coverage/TP_Libreria$bookOrder.coverage" NAME="bookOrder Coverage Results" MODIFIED="1718911206318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/models" />
     <SUITE FILE_PATH="coverage/Libreria_yenny$adminpanel.coverage" NAME="adminpanel Coverage Results" MODIFIED="1718831611748" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ui" />
     <SUITE FILE_PATH="coverage/Libreria_yenny$styles.coverage" NAME="styles Coverage Results" MODIFIED="1718832500334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/ui" />
     <SUITE FILE_PATH="coverage/Libreria_yenny$main.coverage" NAME="main Coverage Results" MODIFIED="1718832872810" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/TP_Libreria$dbsetup.coverage" NAME="dbsetup Coverage Results" MODIFIED="1718904883592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/db" />
+    <SUITE FILE_PATH="coverage/TP_Libreria$dbsetup.coverage" NAME="dbsetup Coverage Results" MODIFIED="1718911086105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/db" />
   </component>
 </project>

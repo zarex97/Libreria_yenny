@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from ui.styles import apply_styles
+from src.ui.styles import apply_styles
 
 class AgregarFrame(tk.Frame):
     def __init__(self, parent, show_frame):

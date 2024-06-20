@@ -42,26 +42,27 @@ def set_order(user_id, books_data):
     dbconn.close()
 
 
-def get_order():
+def get_order(user_id, role_id):
     dbconn = sqlite3.connect(DB_PATH)
     cursor = dbconn.cursor()
-    cursor.execute('''
-    SELECT o.id, u.name, o.date, o.value
-    FROM BookOrder o
-    INNER JOIN user u ON o.user_id = u.id
-    ORDER BY o.date DESC
-    ''')
+    if role_id == 3:
+        cursor.execute('''
+        SELECT o.id, u.name, o.date, o.value
+        FROM BookOrder o
+        INNER JOIN user u ON o.user_id = u.id
+        WHERE u.id = ?
+        ORDER BY o.date DESC
+        ''', (user_id,))
+    else:
+        cursor.execute('''
+        SELECT o.id, u.name, o.date, o.value
+        FROM BookOrder o
+        INNER JOIN user u ON o.user_id = u.id
+        ORDER BY o.date DESC
+        ''')
     orders = cursor.fetchall()
     dbconn.close()
     return orders
 
 
 
-#user_id = 1
-#
-#books_data = {
-#    1: {'quantity': 2, 'price': 19.99},
-#    2: {'quantity': 1, 'price': 29.99}
-#}
-
-#set_order(user_id, books_data)

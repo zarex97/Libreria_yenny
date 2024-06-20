@@ -1,5 +1,7 @@
 import sqlite3
 
+from src.auth.auth import hash_password
+
 
 def dbsetup():
     dbcon = sqlite3.connect('Library.db')
@@ -130,13 +132,17 @@ def dbsetup():
         ('Neuromante', 'William Gibson', '9780441569595', 8.99, 29, 7)
     ]
 
+    admin_password = hash_password("admin")
+    empleado_password = hash_password("empleado")
+    cliente_password = hash_password("cliente")
+
     cursor.execute('''
-    INSERT INTO User (name, password, email, role_id)
-    VALUES 
-        ('Admin', 'admin', 'admin@example.com', (SELECT id FROM Role WHERE name='admin')),
-        ('Empleado', 'empleado', 'empleado@example.com', (SELECT id FROM Role WHERE name='empleado')),
-        ('Cliente', 'cliente', 'cliente@example.com', (SELECT id FROM Role WHERE name='cliente'))
-    ''')
+        INSERT INTO User (name, password, email, role_id)
+        VALUES 
+            ('Admin', ?, 'admin@example.com', (SELECT id FROM Role WHERE name='admin')),
+            ('Empleado', ?, 'empleado@example.com', (SELECT id FROM Role WHERE name='empleado')),
+            ('Cliente', ?, 'cliente@example.com', (SELECT id FROM Role WHERE name='cliente'))
+        ''', (admin_password, empleado_password, cliente_password))
 
     cursor.executemany('''
     INSERT INTO Category (name, description)

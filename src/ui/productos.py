@@ -95,8 +95,8 @@ class ProductosFrame(tk.Frame):
         tk.Label(cart_frame, textvariable=self.total_price).pack(pady=10)
 
         tk.Button(cart_frame, text="Comprar", command=self.place_order).pack(pady=20)
-        tk.Button(cart_frame, text="Mis Pedidos",
-                  command=lambda: self.show_frame(self.master.children["!pedidosframe"])).pack(pady=10)
+        tk.Button(cart_frame, text="Volver atras",
+                  command=lambda: self.show_frame(self.master.children["!adminframe"])).pack(pady=10)
 
     def update_cart(self):
         self.cart_listbox.delete(0, tk.END)
