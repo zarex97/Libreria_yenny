@@ -27,12 +27,13 @@ def get_user(email):
         return User(*user_data)
     return None
 
+
 def set_user(username, password, email):
     dbconn = sqlite3.connect(DB_PATH)
     cursor = dbconn.cursor()
     cursor.execute('''
-    INSERT INTO user (name, password, email, role_id)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO user (name, password, email, role_id, premium)
+    VALUES (?, ?, ?, ?, ?)
     ''', (username, password, email, 3, False))
     dbconn.commit()
     dbconn.close()

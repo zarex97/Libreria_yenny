@@ -21,6 +21,7 @@ class LoginFrame(tk.Frame):
         self.login_password = tk.Entry(self, show='*')
         self.login_password.pack(pady=5)
         tk.Button(self, text="Login", command=self.handle_login).pack(pady=20)
+        tk.Button(self, text="Registrarse", command=lambda: self.show_frame(self.master.children["!registroframe"])).pack(pady=10)
 
 
     def handle_login(self):
@@ -36,3 +37,9 @@ class LoginFrame(tk.Frame):
                 self.show_frame(self.master.children["!adminframe"])
         else:
             messagebox.showinfo("Error de login", "Credenciales incorrectas")
+
+
+
+
+
+

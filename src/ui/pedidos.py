@@ -12,8 +12,7 @@ class PedidosFrame(tk.Frame):
 
     def create_widgets(self):
         tk.Label(self, text="Pedidos", font=("Helvetica", 24, "bold")).pack(pady=20)
-        
-        # Create a Listbox to display the orders
+
         self.pedido_listbox = tk.Listbox(self, font=("Helvetica", 12), height=10)
         self.pedido_listbox.pack(pady=10, padx=20, fill=tk.BOTH, expand=True)
         

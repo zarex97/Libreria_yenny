@@ -32,6 +32,6 @@ registro_frame.grid(row=0, column=0, sticky='nsew', in_=root)
 pedidos_frame.grid(row=0, column=0, sticky='nsew', in_=root)
 productos_frame.grid(row=0, column=0, sticky='nsew', in_=root)
 
-show_frame(admin_frame)
+show_frame(login_frame)
 
 root.mainloop()
