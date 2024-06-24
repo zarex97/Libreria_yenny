@@ -4,6 +4,7 @@ from tkinter import messagebox
 from src.ui.styles import apply_styles
 from src.logic.register_logic import *
 
+
 class RegistroFrame(tk.Frame):
     def __init__(self, parent, show_frame):
         super().__init__(parent)
@@ -23,6 +24,7 @@ class RegistroFrame(tk.Frame):
         self.registro_password = tk.Entry(self, show='*')
         self.registro_password.pack(pady=5)
         tk.Button(self, text="Registrar", command=self.register).pack(pady=20)
+        tk.Button(self, text="Iniciar Sesion", command=lambda: self.show_frame(self.master.children["!loginframe"])).pack(pady=10)
 
 
     def register(self):
@@ -37,7 +39,6 @@ class RegistroFrame(tk.Frame):
             self.show_frame(self.master.children["!productosframe"])
         else:
             messagebox.showinfo("Error de registro", "El mail ya ha sido usado")
-
 
 
 
