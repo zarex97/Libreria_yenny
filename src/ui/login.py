@@ -3,6 +3,7 @@ from tkinter import messagebox
 
 from src.ui.adminpanel import AdminFrame
 from src.ui.pedidos import PedidosFrame
+from src.ui.productos import ProductosFrame
 from src.ui.styles import apply_styles
 from src.logic.login_logic import *
 
@@ -23,7 +24,7 @@ class LoginFrame(tk.Frame):
         tk.Label(self, text="Contraseña").pack(pady=5)
         self.login_password = tk.Entry(self, show='*')
         self.login_password.pack(pady=5)
-        tk.Button(self, text="Login", command=self.handle_login).pack(pady=20)
+        tk.Button(self, text="Iniciar Sesion", command=self.handle_login).pack(pady=20)
         tk.Button(self, text="Registrarse",
                   command=lambda: self.show_frame(self.master.children["!registroframe"])).pack(pady=10)
 
@@ -37,6 +38,8 @@ class LoginFrame(tk.Frame):
             self.master.user = user
             self.master.pedidos_frame = PedidosFrame(self.master, self.show_frame, user.id, user.role_id)
             self.master.pedidos_frame.grid(row=0, column=0, sticky='nsew', in_=self.master)
+            self.master.productos_frame = ProductosFrame(self.master, self.show_frame, user.id)
+            self.master.productos_frame.grid(row=0, column=0, sticky='nsew', in_=self.master)
             self.master.admin_frame = AdminFrame(self.master, self.show_frame, user.role_id)
             self.master.admin_frame.grid(row=0, column=0, sticky='nsew', in_=self.master)
             self.show_frame(self.master.admin_frame)

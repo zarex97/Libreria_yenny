@@ -1,10 +1,10 @@
 import tkinter as tk
+
+from src.ui.Abm_usuarios.abm_usuarios import ABMUsuariosFrame
 from ui.login import LoginFrame
 from ui.adminpanel import AdminFrame
 from ui.registro import RegistroFrame
-from ui.pedidos import PedidosFrame
-from ui.productos import ProductosFrame
-from ui.agregar import AgregarFrame
+from src.ui.Abm_libros.abm_libros import ABMLibrosFrame
 
 
 def show_frame(frame):
@@ -33,12 +33,13 @@ current_role_id = None
 
 login_frame = LoginFrame(root, show_frame, on_login_success)
 registro_frame = RegistroFrame(root, show_frame)
-productos_frame = ProductosFrame(root, show_frame)
-agregar_frame = AgregarFrame(root, show_frame)
+abm_libros_frame = ABMLibrosFrame(root, show_frame)
+abm_usuarios_frame = ABMUsuariosFrame(root, show_frame)
 
 login_frame.grid(row=0, column=0, sticky='nsew', in_=root)
 registro_frame.grid(row=0, column=0, sticky='nsew', in_=root)
-productos_frame.grid(row=0, column=0, sticky='nsew', in_=root)
+abm_libros_frame.grid(row=0, column=0, sticky='nsew', in_=root)
+abm_usuarios_frame.grid(row=0, column=0, sticky='nsew', in_=root)
 
 show_frame(login_frame)
 

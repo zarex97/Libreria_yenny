@@ -69,24 +69,6 @@ def dbsetup():
     )
     ''')
 
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Cart(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES User (id)
-    )
-    ''')
-
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS CartDetail(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    cart_id INTEGER,
-    book_id INTEGER,
-    quantity INTEGER NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES Book (id),
-    FOREIGN KEY (cart_id) REFERENCES Cart (id)
-    )
-    ''')
 
     cursor.execute('''
     INSERT INTO Role (name)
