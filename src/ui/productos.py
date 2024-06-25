@@ -1,3 +1,5 @@
+
+
 import os
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -109,7 +111,7 @@ class ProductosFrame(tk.Frame):
         tk.Button(cart_frame, text="Comprar", command=self.place_order).pack(pady=20)
         tk.Button(cart_frame, text="Volver atras",
                   command=lambda: self.show_frame(self.master.children["!adminframe"])).pack(pady=10)
-
+        tk.Button(cart_frame, text="Cerrar Sesión", command=self.logout).pack(pady=10)
     def update_cart(self):
         self.cart_listbox.delete(0, tk.END)
         for item in self.cart_items:
@@ -143,6 +145,12 @@ class ProductosFrame(tk.Frame):
         else:
             messagebox.showerror("Error", f"No se encontró el libro {book_title} en la base de datos")
 
+    def logout(self):
+        # Realiza aquí las acciones necesarias para cerrar sesión,
+        # como limpiar variables de sesión o mostrar un mensaje de confirmación.
+
+        # Luego, muestra el frame de inicio de sesión:
+        self.show_frame(self.master.children["!loginframe"])
     def place_order(self):
         user_id = self.user_id
         books_data = {}
