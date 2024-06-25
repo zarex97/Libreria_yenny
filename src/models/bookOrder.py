@@ -41,6 +41,8 @@ def set_order(user_id, books_data):
     dbconn.commit()
     dbconn.close()
 
+    return order_id
+
 
 def get_order(user_id, role_id):
     dbconn = sqlite3.connect(DB_PATH)
@@ -63,6 +65,20 @@ def get_order(user_id, role_id):
     orders = cursor.fetchall()
     dbconn.close()
     return orders
+
+
+def get_order_details(order_id):
+    dbconn = sqlite3.connect(DB_PATH)
+    cursor = dbconn.cursor()
+    cursor.execute('''
+        SELECT Book.title, OrderDetail.quantity, OrderDetail.book_price
+        FROM OrderDetail
+        JOIN Book ON OrderDetail.book_id = Book.id
+        WHERE OrderDetail.order_id = ?
+    ''', (order_id,))
+    order_details = cursor.fetchall()
+    dbconn.close()
+    return order_details
 
 
 

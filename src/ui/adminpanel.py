@@ -13,20 +13,14 @@ class AdminFrame(tk.Frame):
     def create_widgets(self):
         tk.Label(self, text="Panel de Administrador", font=("Helvetica", 24, "bold")).pack(pady=20)
 
-        # Only show certain buttons if role_id is not 3 (admin or empleado)
-        if self.role_id != 3:
-            tk.Button(self, text="Agregar Producto", command=self.show_agregar_frame).pack(pady=10)
-            tk.Button(self, text="Eliminar Producto").pack(pady=10)
+        if self.role_id == 1:
+            tk.Button(self, text="Administrar Libros", command=self.show_abm_libros_frame).pack(pady=10)
+            tk.Button(self, text="Administrar Usuarios", command=self.show_abm_usuarios_frame).pack(pady=10)
+        elif self.role_id == 2:
+            tk.Button(self, text="Administrar Libros", command=self.show_abm_libros_frame).pack(pady=10)
 
         tk.Button(self, text="Ver Tienda", command=self.show_productos_frame).pack(pady=10)
         tk.Button(self, text="Ver Pedidos", command=self.show_pedidos_frame).pack(pady=10)
-
-    def show_agregar_frame(self):
-        agregar_frame = self.master.children.get("!agregarframe")
-        if agregar_frame:
-            agregar_frame.tkraise()
-        else:
-            print("¡Error! El frame '!agregarframe' no está disponible.")
 
     def show_productos_frame(self):
         productos_frame = self.master.children.get("!productosframe")
@@ -41,3 +35,17 @@ class AdminFrame(tk.Frame):
             pedidos_frame.tkraise()
         else:
             print("¡Error! El frame '!pedidosframe' no está disponible.")
+
+    def show_abm_libros_frame(self):
+        abm_libros_frame = self.master.children.get("!abmlibrosframe")
+        if abm_libros_frame:
+            abm_libros_frame.tkraise()
+        else:
+            print("¡Error! El frame '!abmlibrosframe' no está disponible.")
+
+    def show_abm_usuarios_frame(self):
+        abm_usuarios_frame = self.master.children.get("!abmusuariosframe")
+        if abm_usuarios_frame:
+            abm_usuarios_frame.tkraise()
+        else:
+            print("¡Error! El frame '!abmusuariosframe' no está disponible.")

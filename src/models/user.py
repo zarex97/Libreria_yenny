@@ -17,6 +17,21 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, '..', 'db', 'Library.db')
 
 
+def get_all_users():
+    dbconn = sqlite3.connect(DB_PATH)
+    cursor = dbconn.cursor()
+    cursor.execute('SELECT * FROM User')
+    user_data = cursor.fetchall()
+    dbconn.close()
+
+    users = []
+    for data in user_data:
+        user = User(*data)
+        users.append(user)
+
+    return users
+
+
 def get_user(email):
     dbconn = sqlite3.connect(DB_PATH)
     cursor = dbconn.cursor()
@@ -28,13 +43,25 @@ def get_user(email):
     return None
 
 
-def set_user(username, password, email):
+def set_user(name, password, email, role_id=3, is_premium=False):
     dbconn = sqlite3.connect(DB_PATH)
     cursor = dbconn.cursor()
     cursor.execute('''
     INSERT INTO user (name, password, email, role_id, premium)
     VALUES (?, ?, ?, ?, ?)
-    ''', (username, password, email, 3, False))
+    ''', (name, password, email, role_id, is_premium))
+    dbconn.commit()
+    dbconn.close()
+
+
+def update_user(user_email, name, email, role_id, is_premium):
+    dbconn = sqlite3.connect(DB_PATH)
+    cursor = dbconn.cursor()
+    cursor.execute('''
+    UPDATE user
+    SET name = ?, email = ?, role_id = ?, premium = ?
+    WHERE email = ?
+    ''', (name, email, role_id, is_premium, user_email))
     dbconn.commit()
     dbconn.close()
 
