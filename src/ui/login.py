@@ -4,7 +4,7 @@ from tkinter import messagebox
 from src.ui.adminpanel import AdminFrame
 from src.ui.pedidos import PedidosFrame
 from src.ui.productos import ProductosFrame
-from src.ui.styles import apply_styles
+from src.ui.styles import apply_styles, RoundedButton
 from src.logic.login_logic import *
 
 
@@ -17,16 +17,19 @@ class LoginFrame(tk.Frame):
         apply_styles(self)
 
     def create_widgets(self):
-        tk.Label(self, text="Login", font=("Helvetica", 24, "bold")).pack(pady=20)
-        tk.Label(self, text="Mail").pack(pady=5)
-        self.login_email = tk.Entry(self)
-        self.login_email.pack(pady=5)
-        tk.Label(self, text="Contraseña").pack(pady=5)
-        self.login_password = tk.Entry(self, show='*')
-        self.login_password.pack(pady=5)
-        tk.Button(self, text="Iniciar Sesion", command=self.handle_login).pack(pady=20)
-        tk.Button(self, text="Registrarse",
-                  command=lambda: self.show_frame(self.master.children["!registroframe"])).pack(pady=10)
+        container = tk.Frame(self, bg='#013220', bd=10, relief='flat')  
+        container.pack(pady=20, padx=20)
+
+        tk.Label(container, text="Nombre de usuario", font=("Helvetica", 12, "bold"), bg='#013220', fg='#ffffff').grid(row=0, column=0, pady=5, padx=10)  
+        self.login_email = tk.Entry(container, font=("Helvetica", 12), relief='flat', highlightthickness=0)
+        self.login_email.grid(row=1, column=0, pady=5, padx=10)
+
+        tk.Label(container, text="Contraseña", font=("Helvetica", 12, "bold"), bg='#013220', fg='#ffffff').grid(row=2, column=0, pady=5, padx=10) 
+        self.login_password = tk.Entry(container, show='*', font=("Helvetica", 12), relief='flat', highlightthickness=0)
+        self.login_password.grid(row=3, column=0, pady=5, padx=10)
+
+        RoundedButton(container, text="Iniciar Sesion", command=self.handle_login, width=180, height=60, radius=30, bg='white', fg='#013220').grid(row=4, column=0, pady=20, padx=10)  
+        RoundedButton(container, text="Registrarse", command=lambda: self.show_frame(self.master.children["!registroframe"]), width=180, height=60, radius=30, bg='white', fg='#013220').grid(row=5, column=0, pady=10, padx=10)  # Botón blanco cremoso
 
     def handle_login(self):
         email = self.login_email.get()
