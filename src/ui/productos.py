@@ -1,5 +1,3 @@
-
-
 import os
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -11,6 +9,8 @@ from src.ui.styles import apply_styles
 from src.models.book import get_book_title, get_all_books
 from src.logic.book_logic import get_book_img
 from src.models.bookOrder import set_order
+from src.models.user import get_user  # Añadir importación de get_user
+from src.ui.styles import apply_styles, RoundedButton
 
 
 class ProductosFrame(tk.Frame):
@@ -108,15 +108,27 @@ class ProductosFrame(tk.Frame):
 
         tk.Label(cart_frame, textvariable=self.total_price).pack(pady=10)
 
-        tk.Button(cart_frame, text="Comprar", command=self.place_order).pack(pady=20)
-        tk.Button(cart_frame, text="Volver atras",
-                  command=lambda: self.show_frame(self.master.children["!adminframe"])).pack(pady=10)
-        tk.Button(cart_frame, text="Cerrar Sesión", command=self.logout).pack(pady=10)
+        RoundedButton(cart_frame, text="Comprar", command=self.place_order, width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
+        RoundedButton(cart_frame, text="Volver atrás", command=lambda: self.show_frame(self.master.children["!adminframe"]), width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
+        RoundedButton(cart_frame, text="Cerrar Sesión", command=self.logout, width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
+
     def update_cart(self):
         self.cart_listbox.delete(0, tk.END)
+        total = 0.0
+
+        for item in self.cart_items:
+            total += item['price'] * item['quantity']
+
+        user = get_user(self.user_id)
+        if user and user.is_premium:
+            total_discounted = total * 0.7
+            total = round(total_discounted, 2)
+
         for item in self.cart_items:
             self.cart_listbox.insert(tk.END, f"{item['title']} - Cantidad: {item['quantity']} - ${item['price']:.2f}")
-            self.total_price.set(f"Total: ${sum(item['price']*item['quantity'] for item in self.cart_items):.2f} ")
+
+        self.total_price.set(f"Total: ${total:.2f}")
+
 
     def on_book_click(self, event):
         img_label = event.widget
@@ -146,11 +158,8 @@ class ProductosFrame(tk.Frame):
             messagebox.showerror("Error", f"No se encontró el libro {book_title} en la base de datos")
 
     def logout(self):
-        # Realiza aquí las acciones necesarias para cerrar sesión,
-        # como limpiar variables de sesión o mostrar un mensaje de confirmación.
-
-        # Luego, muestra el frame de inicio de sesión:
         self.show_frame(self.master.children["!loginframe"])
+
     def place_order(self):
         user_id = self.user_id
         books_data = {}
@@ -178,6 +187,3 @@ class ProductosFrame(tk.Frame):
                 self.master.pedidos_frame.update_orders()
         else:
             messagebox.showwarning("Carrito vacío", "Agrega libros al carrito antes de realizar la compra")
-
-
-

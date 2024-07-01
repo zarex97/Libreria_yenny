@@ -82,3 +82,24 @@ def get_order_details(order_id):
 
 
 
+def delete_order(order_id):
+    try:
+        dbconn = sqlite3.connect(DB_PATH)
+        cursor = dbconn.cursor()
+
+        cursor.execute('''
+        DELETE FROM OrderDetail
+        WHERE order_id = ?
+        ''', (order_id,))
+
+        cursor.execute('''
+        DELETE FROM BookOrder
+        WHERE id = ?
+        ''', (order_id,))
+
+        dbconn.commit()
+        dbconn.close()
+        return True
+    except sqlite3.Error as e:
+        print(f"Error al eliminar el pedido #{order_id}: {e}")
+        return False

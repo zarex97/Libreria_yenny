@@ -1,5 +1,5 @@
 import tkinter as tk
-from src.ui.styles import apply_styles
+from src.ui.styles import apply_styles, RoundedButton
 
 
 class AdminFrame(tk.Frame):
@@ -11,16 +11,14 @@ class AdminFrame(tk.Frame):
         apply_styles(self)
 
     def create_widgets(self):
-        tk.Label(self, text="Panel de Administrador", font=("Helvetica", 24, "bold")).pack(pady=20)
-
         if self.role_id == 1:
-            tk.Button(self, text="Administrar Libros", command=self.show_abm_libros_frame).pack(pady=10)
-            tk.Button(self, text="Administrar Usuarios", command=self.show_abm_usuarios_frame).pack(pady=10)
+            RoundedButton(self, text="Administrar Libros", command=self.show_abm_libros_frame, width=180, height=60, bg='white', fg='#013220').pack(pady=10)
+            RoundedButton(self, text="Administrar Usuarios", command=self.show_abm_usuarios_frame, width=180, height=60, bg='white', fg='#013220').pack(pady=10)
         elif self.role_id == 2:
-            tk.Button(self, text="Administrar Libros", command=self.show_abm_libros_frame).pack(pady=10)
+            RoundedButton(self, text="Administrar Libros", command=self.show_abm_libros_frame, width=180, height=60, bg='white', fg='#013220').pack(pady=10)
 
-        tk.Button(self, text="Ver Tienda", command=self.show_productos_frame).pack(pady=10)
-        tk.Button(self, text="Ver Pedidos", command=self.show_pedidos_frame).pack(pady=10)
+        RoundedButton(self, text="Ver Tienda", command=self.show_productos_frame, width=180, height=60, bg='white', fg='#013220').pack(pady=10)
+        RoundedButton(self, text="Ver Pedidos", command=self.show_pedidos_frame, width=180, height=60, bg='white', fg='#013220').pack(pady=10)
 
     def show_productos_frame(self):
         productos_frame = self.master.children.get("!productosframe")
