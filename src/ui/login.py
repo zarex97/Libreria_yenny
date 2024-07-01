@@ -1,9 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 
-from src.ui.adminpanel import AdminFrame
-from src.ui.pedidos import PedidosFrame
-from src.ui.productos import ProductosFrame
 from src.ui.styles import apply_styles, RoundedButton
 from src.logic.login_logic import *
 
@@ -20,7 +17,7 @@ class LoginFrame(tk.Frame):
         container = tk.Frame(self, bg='#013220', bd=10, relief='flat')  
         container.pack(pady=20, padx=20)
 
-        tk.Label(container, text="Nombre de usuario", font=("Helvetica", 12, "bold"), bg='#013220', fg='#ffffff').grid(row=0, column=0, pady=5, padx=10)  
+        tk.Label(container, text="Email", font=("Helvetica", 12, "bold"), bg='#013220', fg='#ffffff').grid(row=0, column=0, pady=5, padx=10)
         self.login_email = tk.Entry(container, font=("Helvetica", 12), relief='flat', highlightthickness=0)
         self.login_email.grid(row=1, column=0, pady=5, padx=10)
 
@@ -38,13 +35,7 @@ class LoginFrame(tk.Frame):
         user = login(email, password)
 
         if user:
-            self.master.user = user
-            self.master.pedidos_frame = PedidosFrame(self.master, self.show_frame, user.id, user.role_id)
-            self.master.pedidos_frame.grid(row=0, column=0, sticky='nsew', in_=self.master)
-            self.master.productos_frame = ProductosFrame(self.master, self.show_frame, user.id)
-            self.master.productos_frame.grid(row=0, column=0, sticky='nsew', in_=self.master)
-            self.master.admin_frame = AdminFrame(self.master, self.show_frame, user.role_id)
-            self.master.admin_frame.grid(row=0, column=0, sticky='nsew', in_=self.master)
-            self.show_frame(self.master.admin_frame)
+            self.on_login_success(user)
         else:
             messagebox.showinfo("Error de login", "Credenciales incorrectas")
+

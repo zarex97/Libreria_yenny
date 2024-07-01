@@ -4,11 +4,10 @@ from src.models.bookOrder import *
 from src.ui.styles import apply_styles, RoundedButton
 
 class PedidosFrame(tk.Frame):
-    def __init__(self, parent, show_frame, user_id, role_id):
+    def __init__(self, parent, show_frame, user):
         super().__init__(parent)
         self.show_frame = show_frame
-        self.user_id = user_id
-        self.role_id = role_id
+        self.user = user
         self.create_widgets()
         apply_styles(self)
 
@@ -21,12 +20,11 @@ class PedidosFrame(tk.Frame):
         self.update_orders()
 
         RoundedButton(self, text="Ver detalles", command=self.show_order_details, width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
-        if self.role_id == 1 :
+        if self.user.role_id == 1 :
             RoundedButton(self, text="Envio hecho", command=self.cancel_order, width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
-        elif self.role_id == 2 :
+        elif self.user.role_id == 2 :
             RoundedButton(self, text="Envio hecho", command=self.cancel_order, width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
-              
-        elif self.role_id == 3:
+        elif self.user.role_id == 3:
             RoundedButton(self, text="Cancelar pedido", command=self.cancel_order, width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
 
         
@@ -35,7 +33,7 @@ class PedidosFrame(tk.Frame):
     def update_orders(self):
         self.pedido_listbox.delete(0, tk.END)
 
-        orders = get_order(self.user_id, self.role_id)
+        orders = get_order(self.user.id, self.user.role_id)
 
         for order in orders:
             order_text = f"Pedido #{order[0]} - Usuario: {order[1]}, Fecha: {order[2]}, Valor: {order[3]}"
@@ -80,36 +78,32 @@ class PedidosFrame(tk.Frame):
 
         cancel_result = cancel_order(selected_order_id)
         
-        if self.role_id == 1:
+        if self.user.role_id == 1:
             if cancel_result:
                 messagebox.showinfo("Pedido completado", f"El pedido #{selected_order_id} ha sido completado")
                 self.update_orders()
             else:
                 messagebox.showerror("Error", f"No se pudo completar el pedido #{selected_order_id}")        
-        elif self.role_id == 2:
+        elif self.user.role_id == 2:
             if cancel_result:
                 messagebox.showinfo("Pedido completado", f"El pedido #{selected_order_id} ha sido completado")
                 self.update_orders()
             else:
                 messagebox.showerror("Error", f"No se pudo completar el pedido #{selected_order_id}")    
-        elif self.role_id == 3:
+        elif self.user.role_id == 3:
             if cancel_result:
-                messagebox.showinfo("Pedido cancelado", f"El pedido #{selected_order_id} ha sido cancelado")
+                messagebox.showinfo("Pedido cancelado", f"Tu pedido ha sido cancelado")
                 self.update_orders()
             else:
                 messagebox.showerror("Error", f"No se pudo cancelar el pedido #{selected_order_id}")  
-        
-
-                
-                
 
     def back(self):
         self.show_frame(self.master.children["!adminframe"])
 
+
 def cancel_order(order_id):
-    
     try:
-       
+
         delete_order(order_id)
         return True
     except Exception as e:
