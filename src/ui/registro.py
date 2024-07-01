@@ -6,9 +6,10 @@ from src.logic.register_logic import register
 
 
 class RegistroFrame(tk.Frame):
-    def __init__(self, parent, show_frame):
+    def __init__(self, parent, show_frame, on_login_success):
         super().__init__(parent)
         self.show_frame = show_frame
+        self.on_login_success = on_login_success
         self.create_widgets()
         apply_styles(self)  # Apply styles here
 
@@ -32,10 +33,18 @@ class RegistroFrame(tk.Frame):
         email = self.registro_email.get()
         password = self.registro_password.get()
 
-        register_user = register(name, password, email)
+        if '@' not in email:
+            messagebox.showinfo("Error al registrarse", "Ingrese un email valido")
+            return
 
-        if register_user:
+        if len(password) < 8:
+            messagebox.showinfo("Error al registrarse", "La contraseña debe tener al menos 8 caracteres")
+            return
+
+        user = register(name, password, email)
+
+        if user:
+            self.on_login_success(user)
             messagebox.showinfo("Registro exitoso", "Te has registrado correctamente")
-            self.show_frame(self.master.children["!productosframe"])
         else:
-            messagebox.showinfo("Error de registro", "El mail ya ha sido usado")
+            messagebox.showinfo("Error de registro", "El email ya ha sido usado")

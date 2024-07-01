@@ -4,20 +4,19 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO
+import threading
 
-from src.ui.styles import apply_styles
+from src.ui.styles import apply_styles, RoundedButton
 from src.models.book import get_book_title, get_all_books
 from src.logic.book_logic import get_book_img
 from src.models.bookOrder import set_order
-from src.models.user import get_user  # Añadir importación de get_user
-from src.ui.styles import apply_styles, RoundedButton
 
 
 class ProductosFrame(tk.Frame):
-    def __init__(self, parent, show_frame, user_id):
+    def __init__(self, parent, show_frame, user):
         super().__init__(parent)
         self.show_frame = show_frame
-        self.user_id = user_id
+        self.user = user
         self.create_widgets()
         apply_styles(self)
 
@@ -28,18 +27,48 @@ class ProductosFrame(tk.Frame):
 
         canvas = tk.Canvas(self)
         scrollbar = ttk.Scrollbar(self, orient="vertical", command=canvas.yview)
-        scrollable_frame = ttk.Frame(canvas)
+        self.scrollable_frame = ttk.Frame(canvas)
 
-        scrollable_frame.bind(
+        self.scrollable_frame.bind(
             "<Configure>",
             lambda e: canvas.configure(
                 scrollregion=canvas.bbox("all")
             )
         )
 
-        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
 
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
+        cart_frame = tk.Frame(self)
+        cart_frame.pack(side="right", fill="y", padx=10)
+
+        self.cart_items = []
+        self.total_price = tk.DoubleVar(value=0.0)
+
+        tk.Label(cart_frame, text="Mi Carrito").pack()
+
+        self.cart_listbox = tk.Listbox(cart_frame, height=6, width=30)
+        self.cart_listbox.pack(pady=2)
+
+        self.update_cart()
+
+        tk.Label(cart_frame, textvariable=self.total_price).pack(pady=10)
+
+        RoundedButton(cart_frame, text="Comprar", command=self.place_order, width=180, height=60, radius=30, bg='white',
+                      fg='#013220').pack(pady=10)
+        RoundedButton(cart_frame, text="Volver atrás",
+                      command=lambda: self.show_frame(self.master.children["!adminframe"]), width=180, height=60,
+                      radius=30, bg='white', fg='#013220').pack(pady=10)
+
+        self.load_books_in_thread()
+
+    def load_books_in_thread(self):
+        threading.Thread(target=self.load_books).start()
+
+    def load_books(self):
         books = get_all_books()
         row, col = 0, 0
 
@@ -52,7 +81,7 @@ class ProductosFrame(tk.Frame):
             if stock > 0:
                 cover_url = get_book_img(title)
 
-                frame = tk.Frame(scrollable_frame, bd=2, relief=tk.SOLID, width=150, height=250)
+                frame = tk.Frame(self.scrollable_frame, bd=2, relief=tk.SOLID, width=150, height=250)
                 frame.grid_propagate(False)
                 frame.grid(row=row, column=col, padx=10, pady=10, sticky="nsew")
 
@@ -78,7 +107,6 @@ class ProductosFrame(tk.Frame):
 
                     img_label.bind("<Button-1>", self.on_book_click)
                     title_label.bind("<Button-1>", self.on_book_click)
-
                 else:
                     img = Image.open(os.path.join(os.path.dirname(__file__), '..', 'assets', 'defaultimg.png'))
                     default_photo = ImageTk.PhotoImage(img)
@@ -90,45 +118,11 @@ class ProductosFrame(tk.Frame):
                     col = 0
                     row += 1
 
-        canvas.pack(side="left", fill="both", expand=True)
-        scrollbar.pack(side="right", fill="y")
-
-        cart_frame = tk.Frame(self)
-        cart_frame.pack(side="right", fill="y", padx=10)
-
-        self.cart_items = []
-        self.total_price = tk.DoubleVar(value=0.0)
-
-        tk.Label(cart_frame, text="Mi Carrito").pack()
-
-        self.cart_listbox = tk.Listbox(cart_frame, height=6, width=30)
-        self.cart_listbox.pack(pady=2)
-
-        self.update_cart()
-
-        tk.Label(cart_frame, textvariable=self.total_price).pack(pady=10)
-
-        RoundedButton(cart_frame, text="Comprar", command=self.place_order, width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
-        RoundedButton(cart_frame, text="Volver atrás", command=lambda: self.show_frame(self.master.children["!adminframe"]), width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
-        RoundedButton(cart_frame, text="Cerrar Sesión", command=self.logout, width=180, height=60, radius=30, bg='white', fg='#013220').pack(pady=10)
-
     def update_cart(self):
         self.cart_listbox.delete(0, tk.END)
-        total = 0.0
-
-        for item in self.cart_items:
-            total += item['price'] * item['quantity']
-
-        user = get_user(self.user_id)
-        if user and user.is_premium:
-            total_discounted = total * 0.7
-            total = round(total_discounted, 2)
-
         for item in self.cart_items:
             self.cart_listbox.insert(tk.END, f"{item['title']} - Cantidad: {item['quantity']} - ${item['price']:.2f}")
-
-        self.total_price.set(f"Total: ${total:.2f}")
-
+            self.total_price.set(f"Total: ${sum(item['price']*item['quantity'] for item in self.cart_items):.2f} ")
 
     def on_book_click(self, event):
         img_label = event.widget
@@ -157,11 +151,8 @@ class ProductosFrame(tk.Frame):
         else:
             messagebox.showerror("Error", f"No se encontró el libro {book_title} en la base de datos")
 
-    def logout(self):
-        self.show_frame(self.master.children["!loginframe"])
-
     def place_order(self):
-        user_id = self.user_id
+        user_id = self.user.id
         books_data = {}
 
         for item in self.cart_items:
