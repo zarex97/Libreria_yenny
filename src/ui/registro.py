@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 from src.ui.styles import apply_styles, RoundedButton
-from src.logic.register_logic import *
+from src.logic.register_logic import register
 
 
 class RegistroFrame(tk.Frame):
@@ -10,29 +10,22 @@ class RegistroFrame(tk.Frame):
         super().__init__(parent)
         self.show_frame = show_frame
         self.create_widgets()
-        apply_styles(self)  
+        apply_styles(self)  # Apply styles here
 
     def create_widgets(self):
-        container = tk.Frame(self, bg='#013220', bd=10, relief='flat')  
-        container.pack(pady=20, padx=20)
-
-        tk.Label(container, text="Registro", font=("Helvetica", 24, "bold"), bg='#013220', fg='#ffffff').pack(pady=20)  
-
-        tk.Label(container, text="Nombre", font=("Helvetica", 12, "bold"), bg='#013220', fg='#ffffff').pack(pady=5)  
-        self.registro_nombre = tk.Entry(container, font=("Helvetica", 12), relief='flat', highlightthickness=0)
+        tk.Label(self, text="Registro", font=("Helvetica", 24, "bold")).pack(pady=20)
+        tk.Label(self, text="Nombre").pack(pady=5)
+        self.registro_nombre = tk.Entry(self)
         self.registro_nombre.pack(pady=5)
-
-        tk.Label(container, text="Mail", font=("Helvetica", 12, "bold"), bg='#013220', fg='#ffffff').pack(pady=5)  
-        self.registro_email = tk.Entry(container, font=("Helvetica", 12), relief='flat', highlightthickness=0)
+        tk.Label(self, text="Mail").pack(pady=5)
+        self.registro_email = tk.Entry(self)
         self.registro_email.pack(pady=5)
-
-        tk.Label(container, text="Contraseña", font=("Helvetica", 12, "bold"), bg='#013220', fg='#ffffff').pack(pady=5) 
-        self.registro_password = tk.Entry(container, show='*', font=("Helvetica", 12), relief='flat', highlightthickness=0)
+        tk.Label(self, text="Contraseña").pack(pady=5)
+        self.registro_password = tk.Entry(self, show='*')
         self.registro_password.pack(pady=5)
-
-        RoundedButton(container, text="Registrar", command=self.register, width=180, height=60, bg='white', fg='#013220').pack(pady=20)
-
-        RoundedButton(container, text="Iniciar Sesion", command=lambda: self.show_frame(self.master.children["!loginframe"]), width=180, height=60, bg='white', fg='#013220').pack(pady=10)
+        
+        RoundedButton(self, text="Registrar", command=self.register, width=180, height=60, bg='white', fg='#013220').pack(pady=20)
+        RoundedButton(self, text="Iniciar Sesion", command=lambda: self.show_frame(self.master.children["!loginframe"]), width=180, height=60, bg='white', fg='#013220').pack(pady=10)
 
     def register(self):
         name = self.registro_nombre.get()
